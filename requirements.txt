@@ -1,0 +1,13 @@
+beautifulsoup4
+requests
+pymongo
+python-dotenv
+transformers
+datasets
+torch
+accelerate
+sentencepiece
+huggingface-hub
+nltk
+rouge-score
+streamlit

@@ -1,0 +1,6 @@
+# Ignore config file with sensitive data
+config.env
+
+# Ignore Python cache and compiled files
+__pycache__
+.py[cod]
