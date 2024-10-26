@@ -7,7 +7,7 @@ datasets
 torch
 accelerate
 sentencepiece
-huggingface-hub
+google-generativeai
 nltk
 rouge-score
 streamlit
