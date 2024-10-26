@@ -6,17 +6,23 @@ import streamlit as st
 from pymongo import MongoClient
 
 # Set up page title and sidebar
-st.set_page_config(page_title="Internal AI Chatbot")
+st.set_page_config(page_title="Internal AI Chatbot", page_icon="🤖")
 
-# Custom CSS for styling
+# Custom CSS for enhanced styling
 st.markdown("""
     <style>
         .reportview-container {
-            background-color: #f9f9f9;  /* Light background */
+            background-color: #f2f4f8;  /* Light gray background */
         }
         h1 {
             font-size: 2.5rem;  /* Increase title font size */
             color: #333;  /* Darker color for the title */
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        h2 {
+            color: #4CAF50; /* Green for section headings */
+            margin-top: 2rem;
         }
         .stTextInput input {
             border: 2px solid #4CAF50;  /* Green border for input */
@@ -27,6 +33,22 @@ st.markdown("""
             background-color: #4CAF50;  /* Green button */
             color: white;
             border-radius: 5px;
+            padding: 10px 20px;  /* Add padding to the button */
+        }
+        .response {
+            background-color: #ffffff;  /* White background for response */
+            border: 1px solid #ddd;  /* Light gray border */
+            border-radius: 5px;
+            padding: 15px;
+            margin-top: 20px; /* Space above the response area */
+        }
+        .sidebar {
+            background-color: #ffffff;  /* White sidebar */
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .stSpinner {
+            color: #4CAF50;  /* Spinner color */
         }
     </style>
 """, unsafe_allow_html=True)
@@ -48,7 +70,7 @@ try:
     masked_api_key = GOOGLE_API_KEY[:2] + "****" + GOOGLE_API_KEY[-4:]
     masked_uri = MONGO_URI[:23] + "****" + MONGO_URI[-16:]
 
-    st.sidebar.write("Config import successful!")
+    st.sidebar.write("**Config import successful!**")
     st.sidebar.write("Google API: ", masked_api_key)
     st.sidebar.write("Mongo URI: ", masked_uri)
     st.sidebar.write("Database Name: ", DB_NAME)
@@ -148,6 +170,7 @@ with col2:
         if user_input:
             with st.spinner("Processing..."):
                 response = query_llm_with_mongo_data(user_input)
-                st.markdown(f"### Response:\n{response}")
+                st.markdown(
+                    f'<div class="response"><strong>Response:</strong><br>{response}</div>', unsafe_allow_html=True)
         else:
             st.error("Please enter a query.")
