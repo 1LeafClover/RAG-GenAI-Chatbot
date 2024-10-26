@@ -8,20 +8,16 @@ from pymongo import MongoClient
 # Set up page title and sidebar
 st.set_page_config(page_title="Internal AI Chatbot")
 
-# Adjust the system path to include the project root
-sys.path.insert(0, os.path.abspath(
-    os.path.join(os.path.dirname(__file__), '..')))
-
-# Attempt to import configuration
+# Attempt to retrieve configuration from Streamlit secrets
 try:
-    import config
-    GOOGLE_API_KEY = config.GOOGLE_API_KEY
-    MONGO_URI = config.MONGO_URI
-    DB_NAME = config.DB_NAME
-    COLLECTION_NAME = config.COLLECTION_NAME
+    GOOGLE_API_KEY = st.secrets["GOOGLE_API_KEY"]
+    MONGO_URI = st.secrets["MONGO_URI"]
+    DB_NAME = st.secrets["DB_NAME"]
+    COLLECTION_NAME = st.secrets["COLLECTION_NAME"]
 
-    # Set the GOOGLE_API_KEY as an environment variable
+    # Set the GOOGLE_API_KEY as an environment variable for compatibility
     os.environ['GOOGLE_API_KEY'] = GOOGLE_API_KEY
+
     # Initialize genai with the API key
     genai.configure(api_key=GOOGLE_API_KEY)
 
@@ -34,8 +30,8 @@ try:
     st.sidebar.write("Mongo URI: ", masked_uri)
     st.sidebar.write("Database Name: ", DB_NAME)
     st.sidebar.write("Collection Name: ", COLLECTION_NAME)
-except ModuleNotFoundError as e:
-    st.error(f"Import failed: {e}")
+except KeyError as e:
+    st.error(f"Missing configuration for: {e}")
     sys.exit(1)
 
 CUSTOM_PROMPT_TEMPLATE = """
@@ -91,7 +87,6 @@ def query_llm_with_mongo_data(user_prompt):
     # Format the custom prompt by inserting the user query and MongoDB data
     formatted_data = ""
     for doc in mongo_data:
-        # Add each document's fields in a readable way
         formatted_data += "\n".join([f"{key}: {value}" for key,
                                     value in doc.items() if key != 'source_link'])
         formatted_data += "\n\n"
