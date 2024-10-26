@@ -12,46 +12,12 @@ st.set_page_config(page_title="Internal AI Chatbot", page_icon="🤖")
 st.markdown("""
     <style>
         .reportview-container {
-            background-color: #f2f4f8;  /* Light gray background */
+            background-color: #f2f4f8;
         }
-        h1 {
-            font-size: 2.5rem;  /* Increase title font size */
-            color: #333;  /* Darker color for the title */
-            text-align: center;
-            margin-bottom: 1rem;
-        }
-        h2 {
-            color: #4CAF50; /* Green for section headings */
-            margin-top: 2rem;
-        }
-        .stTextInput input {
-            border: 2px solid #4CAF50;  /* Green border for input */
-            border-radius: 5px;
-            padding: 10px;
-        }
-        .stButton {
-            background-color: #4CAF50;  /* Green button */
-            color: white;
-            border-radius: 5px;
-            padding: 10px 20px;  /* Add padding to the button */
-        }
-        .response {
-            background-color: #ffffff;  /* White background for response */
-            border: 1px solid #ddd;  /* Light gray border */
-            border-radius: 5px;
-            padding: 15px;
-            margin-top: 20px; /* Space above the response area */
-        }
-        .sidebar {
-            background-color: #ffffff;  /* White sidebar */
-            padding: 10px;
-            border-radius: 5px;
-        }
-        .stSpinner {
-            color: #4CAF50;  /* Spinner color */
-        }
+        /* Other styles... */
     </style>
 """, unsafe_allow_html=True)
+
 
 # Attempt to retrieve configuration from Streamlit secrets
 try:
