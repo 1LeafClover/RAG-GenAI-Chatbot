@@ -1,3 +1,4 @@
+
 import sys
 import os
 import time
@@ -7,17 +8,6 @@ from pymongo import MongoClient
 
 # Set up page title and sidebar
 st.set_page_config(page_title="Internal AI Chatbot", page_icon="🤖")
-
-# Custom CSS for enhanced styling
-st.markdown("""
-    <style>
-        .reportview-container {
-            background-color: #f2f4f8;
-        }
-        /* Other styles... */
-    </style>
-""", unsafe_allow_html=True)
-
 
 # Attempt to retrieve configuration from Streamlit secrets
 try:
@@ -36,7 +26,7 @@ try:
     masked_api_key = GOOGLE_API_KEY[:2] + "****" + GOOGLE_API_KEY[-4:]
     masked_uri = MONGO_URI[:23] + "****" + MONGO_URI[-16:]
 
-    st.sidebar.write("**Config import successful!**")
+    st.sidebar.write("Config import successful!")
     st.sidebar.write("Google API: ", masked_api_key)
     st.sidebar.write("Mongo URI: ", masked_uri)
     st.sidebar.write("Database Name: ", DB_NAME)
@@ -156,18 +146,12 @@ def query_llm_with_mongo_data(user_prompt):
 # Streamlit UI Components
 st.title("GitLab Handbook IDKB Chatbot")
 
-col1, col2 = st.columns([2, 3])  # Adjust the proportions as necessary
+user_input = st.text_input("Enter your query:")
 
-with col1:
-    user_input = st.text_input(
-        "Enter your query:", placeholder="What would you like to know about GitLab?")
-
-with col2:
-    if st.button("Submit"):
-        if user_input:
-            with st.spinner("Processing..."):
-                response = query_llm_with_mongo_data(user_input)
-                st.markdown(
-                    f'<div class="response"><strong>Response:</strong><br>{response}</div>', unsafe_allow_html=True)
-        else:
-            st.error("Please enter a query.")
+if st.button("Submit"):
+    if user_input:
+        with st.spinner("Processing..."):
+            response = query_llm_with_mongo_data(user_input)
+            st.write(response)
+    else:
+        st.error("Please enter a query.")
