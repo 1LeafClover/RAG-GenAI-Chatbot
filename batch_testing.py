@@ -67,7 +67,7 @@ def expand_query_with_synonyms(query):
     return list(expanded_query)
 
 
-def retrieve_relevant_chunks_semantic(query, content_chunks, top_n=4, similarity_threshold=0.4):
+def retrieve_relevant_chunks_semantic(query, content_chunks, top_n=4, similarity_threshold=0.3):
     """
     Retrieve the most relevant content chunks using a combination of keyword matching, 
     Sentence-BERT embeddings, and entity-based filtering.
